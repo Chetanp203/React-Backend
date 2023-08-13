@@ -55,7 +55,7 @@ app.get("/find", async (req,res) =>{
   const {email} = req.body;
   if (!email) return res.send("Email is required")
 
-  const user = await User.find({ email : email }).select("-password -confirmPassword ")
+  const user = await User.find({ email : email }).select("-password -confirmPassword -number ")
   console.log(user ,"list of users")
   if(user.length){
     return res.send(user[0])
