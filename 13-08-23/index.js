@@ -1,7 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { login, register } from "./Controllers/User-controller.js";
+import { getCurrentUser, login, register } from "./Controllers/User-controller.js";
+import { addProduct } from "./Controllers/Product-controller.js";
 
 
 const app = express();
@@ -15,6 +16,10 @@ app.get("/", function(req,res){
 app.post("/register",register)
 
 app.post("/login",login)
+
+app.post("/get-current-user",getCurrentUser)
+
+app.post("/add-product", addProduct)
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{
     console.log("Connected to MongoDB")
