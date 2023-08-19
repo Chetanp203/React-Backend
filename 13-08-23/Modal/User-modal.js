@@ -19,6 +19,12 @@ const userSchema = new Schema({
         type: String,
         enum: ["Buyer", "Seller", "Admin"],
         default: "Buyer"
+   },
+   cart: {
+       type:[String]
+   },
+   wishlist: {
+       type:[String]
    }
 })
 

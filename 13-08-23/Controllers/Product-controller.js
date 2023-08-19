@@ -83,9 +83,36 @@ export const updateYourProduct = async (req,res)=>{
     const updatedProduct = await ProductModal.findOneAndUpdate({_id: productId,userId:userId},{name,image,price,category},{new: true})
 
     if(updatedProduct){
-        return res.status(200).json({staus:"Sucess",product: updatedProduct})
+        return res.status(200).json({staus:"Success",product: updatedProduct})
     }
     return res.status(404).json({status:"error",message:"Access denied unauthorised user "})
+
+    }catch(error){
+        return res.status(500).json({status:"error", error:error.message})
+    }
+}
+
+
+export const deleteYourProduct =async (req,res)=>{
+    try{
+        const {productId, token} =req.body;
+
+        if(!productId) return res.status(404).json({status:"error",message:"Product ID is mandatory.."})
+
+        const decodedData = jwt.verify(token, process.env.JWT_SECRET)
+
+        if(!decodedData){
+            return res.status(404).json({status:"error",message:"Token not valid"});
+        }
+     
+         const userId = decodedData.userID;
+
+         const isDeleted = await ProductModal.findOneAndDelete({_id: productId, userId: userId })
+         if(isDeleted){
+            return res.status(200).json({success: true, message:"Product deleted successfully"})
+         }
+
+         throw new Error("MongoDB error")
 
     }catch(error){
         return res.status(500).json({status:"error", error:error.message})
