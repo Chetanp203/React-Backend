@@ -140,3 +140,24 @@ export const deleteFromCart =async (req,res)=>{
         return res.status(500).json({status:"error", error: error.message})
     }
 }
+
+
+export const addComments =async (req,res)=>{
+    try{
+        const{productId, comment,userId}=req.body;
+
+      const user = await UserModal.findById(userId)
+
+
+        const product = await ProductModal.findByIdAndUpdate(
+           productId,{$push : { comments : {comments:comment,name:user.name, userId:userId}} },{new:true}
+        )
+
+        if(product){
+            return res.status(200).json({success:true,message:"Comment added successfully",Product:product})
+        }
+
+    }catch(error){
+        return res.status(500).json({status:"error", error: error.message})
+    }
+}

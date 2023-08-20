@@ -118,3 +118,20 @@ export const deleteYourProduct =async (req,res)=>{
         return res.status(500).json({status:"error", error:error.message})
     }
 }
+
+
+export const addRating=async(req,res)=>{
+    try{
+        const {productId, rating}=req.body;
+
+        const updatedProductRating = await ProductModal.findByIdAndUpdate(productId, { $push: { ratings: rating } }, { new: true })
+
+        if (updateYourProduct) {
+            return res.status(200).json({ success: true, message: "Rating added Successfully", product: updatedProductRating })
+        }
+        throw new Error("Mongodb error")
+
+    }catch(error){
+        return res.status(500).json({status:"error", error:error.message})
+    }
+}
