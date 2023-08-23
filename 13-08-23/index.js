@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from 'cors';
 import { getCurrentUser, login, register } from "./Controllers/User-controller.js";
 import { addProduct, addRating, allProducts, deleteYourProduct, getYourProducts, updateYourProduct } from "./Controllers/Product-controller.js";
 import { checkAdmin, checkSeller, isValidUser } from "./Middlewares/All.Middleware.js";
@@ -10,6 +11,7 @@ import { blockProduct, blockUser, getAllBuyers, getAllProducts, getAllSellers, g
 
 const app = express();
 dotenv.config();
+app.use(cors());
 app.use(express.json())
 
 app.get("/", function(req,res){

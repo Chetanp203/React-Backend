@@ -6,12 +6,13 @@ import  jwt from "jsonwebtoken";
 export const register= async (req,res) =>{
     
     try{
-        const {name, email, password,role}= req.body;
-        if (!name || !email || !password || !role) return res.json({status:"error",message:"All fields are mandatory.."})
+        const {userData}=req.body
+        const {name, email, password,role}= userData;
+        if (!name || !email || !password || !role) return res.json({success:false ,message:"All fields are mandatory.."})
 
         const ifEmailExist = await UserModal.find({email:email})
         if (ifEmailExist.length){
-            return res.json({status:"error",message:"Email already exists try a different email..."})
+            return res.json({success:false ,message:"Email already exists try a different email..."})
         }
 
         const hashedPassword = await bcrypt.hash(password,10);
@@ -20,22 +21,22 @@ export const register= async (req,res) =>{
 
         await user.save();
 
-        return res.json({status:"Success",message:"User Registered Succefully..."})
+        return res.json({success:true,message:"User Registered Succefully..."})
 
 
 
     }catch(error){
-        return res.send({status:"error",message: error})
+        return res.send({success: false,message: error})
     }
 }
 
 export const login = async(req,res)=>{
     try{
-        const{email, password}= req.body;
-        if (!email || !password) return res.json({status:"error",message:"All fields are mandatory.."})
+        const{email, password}= req.body.userData;
+        if (!email || !password) return res.json({success:false ,message:"All fields are mandatory.."})
 
         const user = await UserModal.findOne({email})
-        if (!user) return res.json({status:"error",message:"User not found"})
+        if (!user) return res.json({success:false ,message:"User not found"})
 
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (isPasswordCorrect){
@@ -46,13 +47,13 @@ export const login = async(req,res)=>{
             }
             const token = jwt.sign({ userID: user._id}, process.env.JWT_SECRET)
 
-            return res.json({status:"Success",message:"Login Successfull",user: userCreds,token:token})
+            return res.json({success:true ,message:"Login Successfull",user: userCreds,token:token})
 
         }
-        return res.json({status:"error",message:"Password is incorrect"})
+        return res.json({success:false ,message:"Password is incorrect"})
 
     }catch(error){
-        return res.json({status:"error",message:error})
+        return res.json({success:false ,message:error})
     }
 }
 
