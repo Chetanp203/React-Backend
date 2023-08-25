@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./Register.css"
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { AuthContext } from './Context/AuthContext';
 
 
 const Register = () => {
     const [userData,setUserData]= useState({name:"", email:"", password:"",confirmPassword:"",role:"Buyer"})
+    const {state,dispatch} = useContext(AuthContext);
     const router = useNavigate();
 
     const handleChange = (event)=>{
@@ -37,6 +39,12 @@ const Register = () => {
             toast.error("All fields are mandatory")
         }
     }
+
+    useEffect(()=>{
+      if(state?.user?.name){
+        router("/")
+      }
+      },[state])
   return (
     <div className='reg-con'>
         <form className='form-con' onSubmit={handleSubmit}>
