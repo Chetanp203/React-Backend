@@ -5,13 +5,14 @@ import UserModal from "../Modal/User-modal.js";
 export const addProduct = async (req,res)=>{
     
     try{
-     const {name, price, image, category,token} = req.body;
-     if(!name || !price || !image || !category || !token) return res.status(404).json({status:"error",message:"All fields are mandatory"})
+     const {name, price, image, category} = req.body.productData;
+     const {token} = req.body;
+     if(!name || !price || !image || !category || !token) return res.status(404).json({success:false,message:"All fields are mandatory"})
     
      const decodedData = jwt.verify(token, process.env.JWT_SECRET)
 
      if(!decodedData){
-         return res.status(404).json({status:"error",message:"Token not valid"});
+         return res.status(404).json({success:false,message:"Token not valid"});
      }
   
       const userId = decodedData.userID;
@@ -22,10 +23,10 @@ export const addProduct = async (req,res)=>{
 
     await product.save();
 
-    return res.status(201).json({status:"success",message:"Product added succefully"})
+    return res.status(201).json({success:true,message:"Product added succefully"})
 
     }catch(error){
-        return res.status(500).json({status:"error", error: error.message})
+        return res.status(500).json({success:false, error: error.message})
     }
 }
 
@@ -34,12 +35,12 @@ export const allProducts =async (req,res)=>{
     try{
         const products = await ProductModal.find({});
         if(products.length){
-            return res.status(200).json({status:"success",products: products})
+            return res.status(200).json({success:true,products: products})
         }
-        return res.status(404).json({status:"error",message:"No products found"})
+        return res.status(404).json({success:false,message:"No products found"})
 
     }catch(error){
-        return res.status(500).json({status:"error", error:error.message})
+        return res.status(500).json({success:false, error:error.message})
     }
 }
 
@@ -50,7 +51,7 @@ export const getYourProducts= async (req,res)=>{
         const decodedData = jwt.verify(token, process.env.JWT_SECRET)
 
      if(!decodedData){
-         return res.status(404).json({status:"error",message:"Token not valid"});
+         return res.status(404).json({success:false,message:"Token not valid"});
      }
   
       const userId = decodedData.userID;
@@ -58,12 +59,12 @@ export const getYourProducts= async (req,res)=>{
       const yourProductData = await ProductModal.find({userId:userId})
 
       if(yourProductData.length){
-        return res.status(200).json({status:"success",products: yourProductData})
+        return res.status(200).json({success:true,products: yourProductData})
       }
-      return res.status(404).json({status:"error",message:"No products found.."})
+      return res.status(404).json({success:false,message:"No products found.."})
 
     }catch(error){
-        return res.status(500).json({status:"error",error:error.message})
+        return res.status(500).json({success:false,error:error.message})
     }
 }
 

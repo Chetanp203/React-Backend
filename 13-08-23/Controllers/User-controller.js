@@ -44,7 +44,8 @@ export const login = async(req,res)=>{
             const userCreds = {
                 name: user.name,
                 email: user.email,
-                _id : user._id
+                _id : user._id,
+                role: user.role
             }
             const token = jwt.sign({ userID: user._id}, process.env.JWT_SECRET)
 
@@ -80,7 +81,8 @@ export const getCurrentUser =async (req,res) =>{
         const userObject = {
             name : user?.name,
             email : user?.email,
-            _id: user?._id
+            _id: user?._id,
+            role: user.role
         }
 
         return res.status(200).json({success:true,user : userObject})
