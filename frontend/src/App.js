@@ -9,6 +9,7 @@ import { AuthContext } from './Components/Context/AuthContext';
 import Navbar from './Components/Common/Navbar';
 import AddProducts from './Components/Seller/AddProducts';
 import YourProducts from './Components/Seller/YourProducts';
+import Profile from './Components/Common/Profile';
 
 function App() {
   const {state}= useContext(AuthContext);
@@ -22,6 +23,7 @@ function App() {
     <Route exact path='/register' element={<Register/>}/>
     <Route exact path='/add-product' element={<AddProducts/>}/>
     <Route exact path='/your-products' element={<YourProducts/>}/>
+    <Route exact path='/profile' element={<Profile/>}/>
     </Routes>
     </>
   );

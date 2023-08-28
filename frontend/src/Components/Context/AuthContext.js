@@ -26,16 +26,16 @@ const AuthProvider =({children})=>{
       async  function getCurrentUserData(){
           let token = JSON.parse(localStorage.getItem("token"));
           if(token){
-            const response = await axios.post("http://localhost:8000/get-current-user",{token});
+            try{
+              const response = await axios.post("http://localhost:8000/get-current-user",{token});
             if(response.data.success){
               dispatch({
                   type: "LOGIN",
                   payload: response.data.user
               })
-            }else{
-              dispatch({
-                  type:"LOGOUT",
-              });
+            }
+            }catch(error){
+              console.log(error);
             }
           }
           
