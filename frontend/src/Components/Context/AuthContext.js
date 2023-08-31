@@ -1,6 +1,6 @@
-import axios from "axios";
 import { createContext, useEffect, useReducer } from "react";
 import { toast } from "react-hot-toast";
+import api from "../ApiConfig";
 
 const initialState = {user : null}
 
@@ -27,7 +27,7 @@ const AuthProvider =({children})=>{
           let token = JSON.parse(localStorage.getItem("token"));
           if(token){
             try{
-              const response = await axios.post("http://localhost:8000/get-current-user",{token});
+              const response = await api.post("/get-current-user",{token});
             if(response.data.success){
               dispatch({
                   type: "LOGIN",

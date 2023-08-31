@@ -4,6 +4,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { set } from "mongoose";
 import AuthProtected from "./AuthProtected";
 import { toast } from "react-hot-toast";
+import api from "../ApiConfig";
 
 const Profile = () => {
   const [number, setNumber] = useState();
@@ -13,7 +14,7 @@ const Profile = () => {
   const { state } = useContext(AuthContext);
 
   const sendOtp = async () => {
-    const response = await axios.post("http://localhost:8000/send-otp", {
+    const response = await api.post("/send-otp", {
       userId: state?.user?._id,
     });
     if (response.data.success) {
@@ -28,7 +29,7 @@ const Profile = () => {
     e.preventDefault();
     if (otp) {
       try {
-        const response = await axios.post("http://localhost:8000/verify-otp", {
+        const response = await api.post("/verify-otp", {
           userId: state?.user?._id,
           otp,
         });
@@ -51,7 +52,7 @@ const Profile = () => {
   useEffect(() => {
     async function getNumber() {
       try {
-        const response = await axios.post("http://localhost:8000/get-number", {
+        const response = await api.post("/get-number", {
           userId: state?.user?._id,
         });
         if (response.data.success) {
