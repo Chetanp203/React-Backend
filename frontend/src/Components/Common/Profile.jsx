@@ -14,7 +14,7 @@ const Profile = () => {
   const { state } = useContext(AuthContext);
 
   const sendOtp = async () => {
-    const response = await api.post("/send-otp", {
+    const response = await api.post("/all/send-otp", {
       userId: state?.user?._id,
     });
     if (response.data.success) {
@@ -29,7 +29,7 @@ const Profile = () => {
     e.preventDefault();
     if (otp) {
       try {
-        const response = await api.post("/verify-otp", {
+        const response = await api.post("/all/verify-otp", {
           userId: state?.user?._id,
           otp,
         });
@@ -52,7 +52,7 @@ const Profile = () => {
   useEffect(() => {
     async function getNumber() {
       try {
-        const response = await api.post("/get-number", {
+        const response = await api.post("/all/get-number", {
           userId: state?.user?._id,
         });
         if (response.data.success) {

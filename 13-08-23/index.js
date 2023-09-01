@@ -8,7 +8,7 @@ import { addProduct, addRating, allProducts, deleteYourProduct, getYourProducts,
 import { checkAdmin, checkSeller, isValidUser } from "./Middlewares/All.Middleware.js";
 import { addComments, addToCart, addToWishlist, deleteFromCart, getCartProducts, getWishlistProducts } from "./Controllers/Buyers-controller.js";
 import { blockProduct, blockUser, getAllBuyers, getAllProducts, getAllSellers, getBlockedProducts, getUnverifiedProducts, getverifiedProducts, unBlockUser, unblockProduct, verifyProduct } from "./Controllers/Admin-controller.js";
-
+import routeIndex from './routes/indeix.js';
 
 const app = express();
 dotenv.config();
@@ -20,46 +20,22 @@ app.get("/", function(req,res){
     res.send("Working")
 })
 
-app.post("/register",register)
-app.post("/login",login)
-app.post("/get-current-user",getCurrentUser)
-app.get("/all-products", allProducts)
-app.post("/get-number", getNumber)
-app.post("/send-otp", sendOtp)
-app.post("/verify-otp", verifyOtp)
+//All//
+
+app.use('/api/v1',routeIndex)
 
 //buyer//
-app.patch('/add-rating',isValidUser, addRating)
-app.post("/add-to-cart",addToCart)
-app.delete("/delete-from-cart",deleteFromCart)
-app.get("/get-cart-products",getCartProducts)
-app.post("/add-to-wishlist",addToWishlist)
-app.get("/get-wishlist-products",getWishlistProducts)
-app.patch('/add-comments',isValidUser, addComments)
+
 
 
 //seller//
 
-app.post("/add-product",checkSeller, addProduct)
-app.post("/get-your-products",checkSeller, getYourProducts)
-app.patch("/update-your-product",checkSeller, updateYourProduct)
-app.delete("/delete-your-product",checkSeller,deleteYourProduct)
+
 
 
 
 //admin//
 
-app.patch("/block-user",checkAdmin,blockUser)
-app.patch("/unblock-user",checkAdmin,unBlockUser)
-app.patch("/block-product",checkAdmin,blockProduct)
-app.patch("/unblock-product",checkAdmin,unblockProduct)
-app.get('/get-all-buyers', checkAdmin, getAllBuyers)
-app.get('/get-all-sellers', checkAdmin, getAllSellers)
-app.get('/get-all-products', checkAdmin, getAllProducts)
-app.patch("/verify-product",checkAdmin,verifyProduct)
-app.get("/get-verify-product", checkAdmin, getverifiedProducts)
-app.get("/get-unverified-product", checkAdmin, getUnverifiedProducts)
-app.get("/get-blocked-product", checkAdmin, getBlockedProducts)
 
 
 

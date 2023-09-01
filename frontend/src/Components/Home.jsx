@@ -15,7 +15,7 @@ const Home = () => {
   useEffect(() => {
     async function allProducts() {
       try {
-        const response = await api.get("/all-products");
+        const response = await api.get("/all/all-products");
         if (response.data.success) {
           setProducts(response.data.products);
         }
