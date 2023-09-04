@@ -5,7 +5,7 @@ import { addComments, addToCart, addToWishlist, deleteFromCart, getCartProducts,
 
 const router = express.Router();
 
-router.patch('/add-rating',isValidUser, addRating)
+router.patch("/add-rating",isValidUser, addRating)
 router.post("/add-to-cart",addToCart)
 router.delete("/delete-from-cart",deleteFromCart)
 router.get("/get-cart-products",getCartProducts)

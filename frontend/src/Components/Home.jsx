@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from './Context/AuthContext'
 import { useNavigate } from 'react-router-dom';
-import api from './ApiConfig';
+import api from './ApiConfig/index.js';
 
 const Home = () => {
-  const {state,logout}= useContext(AuthContext);
+  const {state}= useContext(AuthContext);
   // console.log(state?.user,"user here");
   const [products, setProducts] = useState([]);
 
@@ -15,12 +15,13 @@ const Home = () => {
   useEffect(() => {
     async function allProducts() {
       try {
-        const response = await api.get("/all/all-products");
-        if (response.data.success) {
-          setProducts(response.data.products);
+        const response = await api.get("/all/all-products")
+        console.log(response)
+        if (response?.data?.success) {
+          setProducts(response?.data?.products);
         }
       } catch (error) {
-        console.log("error from catch block");
+        console.log(error);
       }
     }
     allProducts();

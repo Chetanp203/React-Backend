@@ -1,8 +1,8 @@
 import express from 'express';
-import allRoutes from './AllRoutes'
-import buyerRoutes from './BuyerRoutes';
-import sellerRoutes from './SellerRoutes';
-import adminRoutes from './AdminRoutes';
+import allRoutes from './AllRoutes.js';
+import buyerRoutes from './BuyerRoutes.js';
+import sellerRoutes from './SellerRoutes.js';
+import adminRoutes from './AdminRoutes.js';
 const router = express.Router();
 
 router.use("/all",allRoutes)
