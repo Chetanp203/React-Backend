@@ -10,5 +10,4 @@ router.use('/buyer',buyerRoutes)
 router.use('/seller',sellerRoutes)
 router.use('/admin',adminRoutes)
 
-
 export default router;
