@@ -23,7 +23,7 @@ const AuthProvider =({children})=>{
     const [state,dispatch]=useReducer(reducer,initialState)
 
     useEffect(()=>{
-      async  function getCurrentUserData(){
+      async function getCurrentUserData(){
           let token = JSON.parse(localStorage.getItem("token"));
           if(token){
             try{
