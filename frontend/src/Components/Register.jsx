@@ -3,8 +3,7 @@ import "./Register.css"
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from './Context/AuthContext';
-import api from './ApiConfig';
-
+import api from './ApiConfig';  
 
 const Register = () => {
     const [userData,setUserData]= useState({name:"", email:"", password:"",confirmPassword:"",role:"Buyer",number:""})

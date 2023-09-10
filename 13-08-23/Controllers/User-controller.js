@@ -9,7 +9,8 @@ export const register= async (req,res) =>{
     try{
         const {userData}=req.body
         const {name, email, password,role,number}= userData;
-        if (!name || !email || !password || !role || !number) return res.json({success:false ,message:"All fields are mandatory.."})
+        if (!name || !email || !password || !role || !number)
+         return res.json({success:false ,message:"All fields are mandatory.."})
 
         const ifEmailExist = await UserModal.find({email:email})
         if (ifEmailExist.length){
